@@ -1,6 +1,8 @@
 package com.poky.core;
 
-public interface Deck {
+import java.util.List;
+
+public interface Deck<E> {
     void resetDeck();
 
 
@@ -14,5 +16,7 @@ public interface Deck {
      * @return a Card from the deck.
      */
     Card drawCard();
+
+    List<E> getCards();
 
 }

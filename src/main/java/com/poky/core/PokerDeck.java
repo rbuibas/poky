@@ -12,7 +12,7 @@ import java.util.Random;
  * The playing deck
  */
 
-public class PokerDeck implements Deck{
+public class PokerDeck implements Deck<Card> {
     private List<Card> cards;
     // how many cards are in deck at a certain moment
     private int cardsInDeck;
@@ -62,17 +62,6 @@ public class PokerDeck implements Deck{
                 cards.stream().reduce("", (partialResult, card) -> partialResult + "\n" + card.toString(), String::concat)
                 + System.lineSeparator() +
                 '}';
-    }
-
-    public String toPrettyString() {
-        StringBuilder builder = new StringBuilder();
-        for (Card card : cards) {
-            builder.append(card.getValue().getValueCode());
-            builder.append(card.getColor().getColorCharacter());
-//            builder.append(System.lineSeparator());
-            builder.append(" ");
-        }
-        return builder.toString();
     }
 
     public List<Card> getCards() {

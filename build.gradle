@@ -11,6 +11,10 @@ repositories {
     mavenCentral()
 }
 
+compileJava {
+    options.compilerArgs += ["-Xlint:unchecked"]
+}
+
 test {
     useJUnitPlatform()
 }
