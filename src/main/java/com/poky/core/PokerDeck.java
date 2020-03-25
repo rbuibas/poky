@@ -13,7 +13,7 @@ import java.util.Random;
  */
 
 public class PokerDeck implements Deck{
-    private List<PokerCard> cards;
+    private List<Card> cards;
     // how many cards are in deck at a certain moment
     private int cardsInDeck;
 
@@ -50,6 +50,11 @@ public class PokerDeck implements Deck{
     }
 
     @Override
+    public Card drawCard() {
+        return null;
+    }
+
+    @Override
     public String toString() {
         return "PokerDeck {" + System.lineSeparator() +
                 "\tcardsInDeck = " + cardsInDeck + System.lineSeparator() +
@@ -68,5 +73,9 @@ public class PokerDeck implements Deck{
             builder.append(" ");
         }
         return builder.toString();
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 }
