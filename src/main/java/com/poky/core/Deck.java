@@ -3,20 +3,36 @@ package com.poky.core;
 import java.util.List;
 
 public interface Deck<E> {
-    void resetDeck();
+    /**
+     * Initialize the deck by adding the cards.
+     */
+    void initialize();
 
+    /**
+     * Reset the deck by making all the cards available.
+     * Implementation can chose whether reset means re-initialization.
+     */
+    void reset();
 
-    void shuffleDeck();
+    /**
+     * Shuffle the cards in the deck.
+     */
+    void shuffle();
 
     /**
      * Draw next card from the deck.
-     * The retrieval is destructive, i.e. the Card will be removed from the Deck.
-     * The Deck is shuffled in advanced, meaning the draw is not random.
+     * The retrieval is <b>destructive</b>, i.e. the card will not be available in for drawing any longer.
+     * Implementation should deal with the disposal or safe-keeping of the card.
      *
      * @return a Card from the deck.
      */
     Card drawCard();
 
-    List<E> getCards();
+    /**
+     * Get all the existing cards in the deck.
+     *
+     * @return all the cards in the deck
+     */
+    List<E> getAllCards();
 
 }
