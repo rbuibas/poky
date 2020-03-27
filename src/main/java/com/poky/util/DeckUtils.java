@@ -7,14 +7,13 @@ import java.util.List;
 
 public class DeckUtils {
 
-    public String deckToPrettyString(Deck<Card> deck) {
-        List<Card> cards = deck.getCards();
+    public static String deckToPrettyString(Deck<Card> deck) {
+        List<Card> cards = deck.getAllCards();
 
         StringBuilder builder = new StringBuilder();
         for (Card card : cards) {
             builder.append(card.getValue().getValueCode());
             builder.append(card.getColor().getColorCharacter());
-//            builder.append(System.lineSeparator());
             builder.append(" ");
         }
         return builder.toString();
