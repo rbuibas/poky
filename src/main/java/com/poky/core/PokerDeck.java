@@ -34,7 +34,7 @@ public class PokerDeck implements Deck<Card> {
      * The collection holding the live cards.
      * All the cards are live cards at the moment of deck initialization.
      */
-    private List<Card> liveCards;
+    private Deque<Card> liveCards;
     private List<Card> burntCards;
     private List<Card> dealtCards;
     /**
@@ -44,7 +44,7 @@ public class PokerDeck implements Deck<Card> {
     private boolean shuffleBlocked;
 
     public PokerDeck() {
-        liveCards = new ArrayList<>(CARDS_IN_STARTING_DECK);
+        liveCards = new ArrayDeque<>(CARDS_IN_STARTING_DECK);
         burntCards = new ArrayList<>(MAX_BURNT_CARDS);
         dealtCards = new ArrayList<>(MAX_DEALT_CARDS);
         initialize();
@@ -91,7 +91,11 @@ public class PokerDeck implements Deck<Card> {
         if (liveCards.size() < 52) {
             log.warn("Shuffling incomplete deck. This is only acceptable in case of misdeal.");
         }
-        Collections.shuffle(liveCards, new Random());
+        // Horrible way of doing this, but it'll stay until I implement Deque shuffle
+        // TODO: implement Deque shuffle
+        List<Card> tempList = new ArrayList<>(liveCards);
+        Collections.shuffle(tempList, new Random());
+        liveCards = new ArrayDeque<>(tempList);
     }
 
 
@@ -104,14 +108,23 @@ public class PokerDeck implements Deck<Card> {
      * @return a Card from the deck.
      */
     @Override
-    public Card drawCard() {
+    public Card dealCard() throws NoSuchElementException {
         log.info("Drawing card");
-        return null;
+        Card dealtCard = null; // how could I avoid nulls? Kotlin?
+        try {
+            dealtCard = liveCards.pop();
+            dealtCards.add(dealtCard);
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+        }
+        return dealtCard;
     }
 
     public Card burnCard() {
         log.info("Burning card");
-        return null;
+        Card burntCard = liveCards.pop();
+        burntCards.add(burntCard);
+        return burntCard;
     }
 
     @Override
@@ -122,31 +135,35 @@ public class PokerDeck implements Deck<Card> {
     /**
      * Get all the live existing cards in the deck, i.e. the cards that haven't been dealt or burned.
      * The retrieval is <b>not destructive</b>.
+     * This method does not give access to the list, it returns a clone.
+     * The {@link #liveCards} will be returned as a List rather than a Deque.
      *
      * @return live cards
      */
     List<Card> getLiveCards() {
-        return null;
+        return new ArrayList<>(liveCards);
     }
 
     /**
      * Get all dealt cards in the deck.
      * The retrieval is <b>not destructive</b>.
+     * This method does not give access to the list, it returns a clone.
      *
      * @return all dealt cards
      */
     List<Card> getDealtCards() {
-        return null;
+        return new ArrayList<>(dealtCards);
     }
 
     /**
      * Get all the burnt cards, i.e. cards not live and not dealt.
      * The retrieval is <b>not destructive</b>.
+     * This method does not give access to the list, it returns a clone.
      *
      * @return all burnt cards
      */
     List<Card> getBurntCards() {
-        return null;
+        return new ArrayList<>(burntCards);
     }
 
     /**

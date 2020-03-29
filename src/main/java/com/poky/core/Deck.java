@@ -26,7 +26,7 @@ public interface Deck<E> {
      *
      * @return a Card from the deck.
      */
-    Card drawCard();
+    Card dealCard();
 
     /**
      * Get all the existing cards in the deck.
