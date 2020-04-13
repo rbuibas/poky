@@ -35,13 +35,14 @@ public class PokerDeck implements Deck<Card> {
      * All the cards are live cards at the moment of deck initialization.
      */
     private Deque<Card> liveCards;
-    private List<Card> burntCards;
-    private List<Card> dealtCards;
+    private final List<Card> burntCards;
+    private final List<Card> dealtCards;
     /**
-     * Flag blocking the shuffling of the deck.
+     * Flag locking the deck, i.e. blocking shuffling and resetting of the deck.
      * For example: if a game gas started shuffling should not be permitted.
+     * TODO: consider who should have access to this
      */
-    private boolean shuffleBlocked;
+    private boolean deckLocked;
 
     public PokerDeck() {
         liveCards = new ArrayDeque<>(CARDS_IN_STARTING_DECK);
@@ -74,6 +75,10 @@ public class PokerDeck implements Deck<Card> {
     @Override
     public void reset() {
         log.info("Resetting Deck");
+        if (isDeckLocked()) {
+            log.warn("Attempting to reset a locked deck");
+            return;
+        }
         liveCards.addAll(burntCards);
         burntCards.clear();
         liveCards.addAll(dealtCards);
@@ -88,10 +93,13 @@ public class PokerDeck implements Deck<Card> {
     @Override
     public void shuffle() {
         log.info("Shuffling Deck");
-        if (liveCards.size() < 52) {
-            log.warn("Shuffling incomplete deck. This is only acceptable in case of misdeal.");
+        if (isDeckLocked()) {
+            log.warn("Attempting to shuffle a locked deck");
+            return;
         }
-        // Horrible way of doing this, but it'll stay until I implement Deque shuffle
+        if (liveCards.size() < 52) {
+            log.warn("Shuffling after a deal (acceptable if misdeal happened)");
+        }
         // TODO: implement Deque shuffle
         List<Card> tempList = new ArrayList<>(liveCards);
         Collections.shuffle(tempList, new Random());
@@ -110,12 +118,13 @@ public class PokerDeck implements Deck<Card> {
     @Override
     public Card dealCard() throws NoSuchElementException {
         log.info("Drawing card");
-        Card dealtCard = null; // how could I avoid nulls? Kotlin?
+        Card dealtCard;
         try {
             dealtCard = liveCards.pop();
             dealtCards.add(dealtCard);
         } catch (NoSuchElementException e) {
-            e.printStackTrace();
+            log.error("Attempted dealing from an empty deck");
+            throw e;
         }
         return dealtCard;
     }
@@ -133,7 +142,8 @@ public class PokerDeck implements Deck<Card> {
     }
 
     /**
-     * Get all the live existing cards in the deck, i.e. the cards that haven't been dealt or burned.
+     * Get all the live existing cards in the deck,
+     * i.e. the cards that haven't been dealt or burned.
      * The retrieval is <b>not destructive</b>.
      * This method does not give access to the list, it returns a clone.
      * The {@link #liveCards} will be returned as a List rather than a Deque.
@@ -184,11 +194,11 @@ public class PokerDeck implements Deck<Card> {
                 .collect(Collectors.toList());
     }
 
-    public boolean isShuffleBlocked() {
-        return shuffleBlocked;
+    public boolean isDeckLocked() {
+        return deckLocked;
     }
 
-    public void setShuffleBlocked(boolean shuffleBlock) {
-        this.shuffleBlocked = shuffleBlock;
+    public void setDeckLocked(boolean deckLock) {
+        this.deckLocked = deckLock;
     }
 }

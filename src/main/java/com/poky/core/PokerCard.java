@@ -23,7 +23,7 @@ public class PokerCard implements Card {
 
     @Override
     public String toString() {
-        return value + " of " + color;
+        return value.getValueCode() + color.getColorCharacter();
     }
 }
 
