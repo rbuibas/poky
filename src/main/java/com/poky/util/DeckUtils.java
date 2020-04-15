@@ -12,7 +12,7 @@ public class DeckUtils {
 
         StringBuilder builder = new StringBuilder();
         for (Card card : cards) {
-            builder.append(card.getValue().getValueCode());
+            builder.append(card.getValueCode());
             builder.append(card.getColor().getColorCharacter());
             builder.append(" ");
         }
