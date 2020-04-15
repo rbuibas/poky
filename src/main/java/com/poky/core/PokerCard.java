@@ -17,13 +17,24 @@ public class PokerCard implements Card {
         return color;
     }
 
+    @Override
     public Value getValue() {
         return value;
     }
 
     @Override
+    public String getValueCode() {
+        return value.getValueCode();
+    }
+
+    @Override
+    public int getValueOrdinal() {
+        return value.ordinal();
+    }
+
+    @Override
     public String toString() {
-        return value.getValueCode() + color.getColorCharacter();
+        return value.getValueCode() + color.getColorCharacter() + " ";
     }
 }
 

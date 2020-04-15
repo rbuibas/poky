@@ -25,7 +25,7 @@ public class PokerCardProperties {
     }
 
     public enum Value {
-        Two("2"),
+        Two("2"), // numeric value 0
         Three("3"),
         Four("4"),
         Five("5"),
@@ -37,9 +37,9 @@ public class PokerCardProperties {
         Jack("J"),
         Queen("Q"),
         King("K"),
-        Ace("A");
+        Ace("A"); // numeric value 12
 
-        private String valueCode;
+        private final String valueCode;
 
         Value(String valueCode) {
             this.valueCode = valueCode;

@@ -36,6 +36,12 @@ public class PokerDeck implements Deck<Card> {
      */
     private Deque<Card> liveCards;
     private final List<Card> burntCards;
+    /**
+     * The collection holding all the dealt cards.
+     * There is not differentiation between cards dealt to the player
+     * and the cards dealt on the board.
+     * TODO: consider making a difference
+     */
     private final List<Card> dealtCards;
     /**
      * Flag locking the deck, i.e. blocking shuffling and resetting of the deck.
