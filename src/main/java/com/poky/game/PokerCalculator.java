@@ -8,18 +8,20 @@ import java.util.List;
 /**
  * Poker hand-strength calculator and comparator
  * <p>
- * Simple version of the calculator:
- * First, calculate the hand by checking for each of the possible hands:
- * 1. high card
- * 2. pair
- * 3. two-pair
- * 4. three of a kind
- * 5. straight
- * 6. flush
- * 7. full-house
- * 8. 4 of a kind
- * 9. straight-flush
- * 10. royal-flush
+ * Simple version of the calculator:<br/>
+ * First, calculate the hand by checking for each of the possible hands:<br/>
+ * <ol>
+ * <li>high card</li>
+ * <li>pair</li>
+ * <li>two-pair</li>
+ * <li>three of a kind</li>
+ * <li>straight</li>
+ * <li>flush</li>
+ * <li>full-house</li>
+ * <li>4 of a kind</li>
+ * <li>straight-flush</li>
+ * <li>royal-flush</li>
+ * </ol>
  * <p>
  * Calculation can be done for two cards and above (up to 7).
  * Best 5 cards are taken.

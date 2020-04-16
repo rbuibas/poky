@@ -21,15 +21,15 @@ public class PokerDeck implements Deck<Card> {
     /**
      * Maximum number of cards in deck.
      */
-    int CARDS_IN_STARTING_DECK = 52;
+    final int CARDS_IN_STARTING_DECK = 52;
     /**
      * Upper limit: head's up game with "run it 6 times". Do the math.
      */
-    int MAX_BURNT_CARDS = 18;
+    final int MAX_BURNT_CARDS = 18;
     /**
      * Upper limit: 10 player game with "run it 4 times". Do the math.
      */
-    int MAX_DEALT_CARDS = 40;
+    final int MAX_DEALT_CARDS = 40;
     /**
      * The collection holding the live cards.
      * All the cards are live cards at the moment of deck initialization.

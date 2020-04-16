@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PokerGame {
-    Logger log;
+    final Logger log;
 
     private final Map<String, Player> playersMap;
     private final List<Card> communityCards;
@@ -83,7 +83,7 @@ public class PokerGame {
      * @param player player identifier
      */
     public void removePlayer(Player player) {
-        playersMap.remove(player);
+        playersMap.remove(player.getName());
     }
 
     public Deck<Card> getPokerDeck() {

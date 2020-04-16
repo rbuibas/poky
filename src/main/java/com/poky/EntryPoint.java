@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 public class EntryPoint {
-    static Logger log = LogManager.getLogger();
+    static final Logger log = LogManager.getLogger();
 
     static PokerGame pokerGame;
     static Deck<Card> pokerDeck;
