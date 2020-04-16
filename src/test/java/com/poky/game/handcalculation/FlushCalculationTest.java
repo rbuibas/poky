@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -164,7 +165,7 @@ public class FlushCalculationTest {
 
         @Test
         void checkWith1Card() {
-            boolean isFlush = handCalculator.checkFlush(Arrays.asList(
+            boolean isFlush = handCalculator.checkFlush(Collections.singletonList(
                     mockCardKingOfSpade
             ));
             assertFalse(isFlush);

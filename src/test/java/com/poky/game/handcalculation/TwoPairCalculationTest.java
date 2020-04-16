@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -159,7 +160,7 @@ public class TwoPairCalculationTest {
 
         @Test
         void checkWith1Card() {
-            boolean isTwoPair = handCalculator.checkTwoPair(Arrays.asList(
+            boolean isTwoPair = handCalculator.checkTwoPair(Collections.singletonList(
                     mockCardKingOfSpade
             ));
             assertFalse(isTwoPair);

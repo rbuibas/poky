@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -160,7 +161,7 @@ public class FourOfKindCalculationTest {
 
         @Test
         void checkWith1Card() {
-            boolean isFourOfKind = handCalculator.checkFourOfKind(Arrays.asList(
+            boolean isFourOfKind = handCalculator.checkFourOfKind(Collections.singletonList(
                     mockCardKingOfSpade
             ));
             assertFalse(isFourOfKind);

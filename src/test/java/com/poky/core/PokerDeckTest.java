@@ -17,7 +17,7 @@ class PokerDeckTest {
     /**
      * Maximum number of cards in deck.
      */
-    int CARDS_IN_DECK = 52;
+    final int CARDS_IN_DECK = 52;
 
     private PokerDeck pokerDeck;
 

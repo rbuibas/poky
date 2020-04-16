@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -192,7 +193,7 @@ public class PairCalculationTest {
         // cases with not enough cards - automatic false
         @Test
         void checkWith1Card() {
-            boolean isPair = handCalculator.checkPair(Arrays.asList(
+            boolean isPair = handCalculator.checkPair(Collections.singletonList(
                     mockCardKingOfSpade
             ));
             assertFalse(isPair);

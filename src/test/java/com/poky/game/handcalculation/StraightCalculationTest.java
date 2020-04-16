@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -154,7 +155,7 @@ public class StraightCalculationTest {
 
         @Test
         void checkWith1Card() {
-            boolean isStraight = handCalculator.checkStraight(Arrays.asList(
+            boolean isStraight = handCalculator.checkStraight(Collections.singletonList(
                     mockCardKing
             ));
             assertFalse(isStraight);
