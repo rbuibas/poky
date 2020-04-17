@@ -13,6 +13,7 @@ public class HandCalculator {
     private static final int FOUR_CARDS = 4;
     private static final int THREE_CARDS = 3;
     private static final int TWO_CARDS = 2;
+    private static final int ACE_CARD_VALUE = 12;
 
     /**
      * Check if flush can be put together from the cards provided in the list.<br/>
@@ -120,5 +121,45 @@ public class HandCalculator {
             if (increasing) break;
         }
         return increasing;
+    }
+
+    /**
+     * Check if royal flush exists in provided card list.<br/>
+     * If the number of cards is below 5, false is automatically returned.<br/>
+     *
+     * @param sortedCards list of <b>sorted</b> cards
+     * @return true if straight is found, false otherwise
+     */
+    public boolean checkStraightFlush(List<Card> sortedCards) {
+        if (sortedCards.size() < FIVE_CARDS) return false;
+        return checkFlush(sortedCards) && checkStraight(sortedCards);
+    }
+
+    /**
+     * Check if straight flush exists in provided card list.<br/>
+     * If the number of cards is below 5, false is automatically returned.<br/>
+     *
+     * @param sortedCards list of <b>sorted</b> cards
+     * @return true if straight is found, false otherwise
+     */
+    public boolean checkRoyalFlush(List<Card> sortedCards) {
+        if (sortedCards.size() < FIVE_CARDS) return false;
+        boolean isAceHighFlush;
+
+        Map<PokerCardProperties.Color, List<Card>> mapByColors =
+                sortedCards.stream().collect(groupingBy(Card::getColor));
+        isAceHighFlush = mapByColors.values()
+                .stream()
+                .anyMatch(colors -> colors.size() >= FIVE_CARDS &&
+                        colors.stream()
+                                .filter(card -> card.getValueOrdinal()
+                                        == ACE_CARD_VALUE)
+                                .findAny().isPresent());
+        return isAceHighFlush && checkStraight(sortedCards);
+    }
+
+    public boolean checkFullHouse(List<Card> sortedCards) {
+        if (sortedCards.size() < FIVE_CARDS) return false;
+        return checkThreeOfKind(sortedCards) && checkPair(sortedCards);
     }
 }
