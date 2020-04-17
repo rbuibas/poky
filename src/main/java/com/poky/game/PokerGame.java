@@ -22,6 +22,16 @@ public class PokerGame {
     private PokerDeck pokerDeck;
     private int numberOfPlayers;
 
+
+    static int player1Wins;
+    static int player2Wins;
+    static int ties;
+
+    static PokerCalculator.HandRanking playerOneHandRank;
+    static PokerCalculator.HandRanking playerTwoHandRank;
+
+    static PokerCalculator pokerCalculator = new PokerCalculator();
+
     public PokerGame() {
         log = LogManager.getLogger(this.getClass());
         playersMap = new HashMap<>();
@@ -117,5 +127,81 @@ public class PokerGame {
 
     public List<Card> getCommunityCards() {
         return communityCards;
+    }
+
+
+    /////////////////////////////////////////////// MOVED FROM MAIN ///////////////////////////////////
+
+
+    public void playGame(Player player1, Player player2) {
+
+        for (int i = 0; i < 10000; i++) {
+            playRound(player1, player2);
+        }
+
+        log.info(player1.getName() + " won " + player1Wins + " times.");
+        log.info(player2.getName() + " won " + player2Wins + " times.");
+        log.info("I was a tie " + ties + " times.");
+    }
+
+    public PokerCalculator.HandRanking evaluatePlayerHand(Player player, StringBuilder builder) {
+        List<Card> playerCards = new ArrayList<>();
+        /*
+        Bugfix: used to just get the community cards reference and ended up
+        with a reference to an increasing list, due to addAll later.
+
+        General note:
+        I don't really like this and would prefer that cards are never created
+        out of place, i.e. cards are only created once per game, at the beginning.
+        This should be enforced somehow.
+        Also cards should not be copied.
+        Or at least their authenticity should be verifiable.
+         */
+        playerCards.addAll(this.getCommunityCards());
+        playerCards.addAll(player.getHoleCards());
+        PokerCalculator.HandRanking handRanking = pokerCalculator.calculateHand(playerCards);
+        builder.append(player.getName());
+        builder.append(" has ");
+        builder.append(handRanking.getRankingName());
+        builder.append(System.getProperty("line.separator"));
+        return handRanking;
+    }
+
+    public void playRound(Player player1, Player player2) {
+        StringBuilder builder = new StringBuilder();
+        nextHand();
+
+        player1.addHoleCard(pokerDeck.dealCard());
+        player2.addHoleCard(pokerDeck.dealCard());
+        player1.addHoleCard(pokerDeck.dealCard());
+        player2.addHoleCard(pokerDeck.dealCard());
+
+        dealFlop();
+        dealTurn();
+        dealRiver();
+
+        builder.append(this.toString());
+
+        // Player 1
+        playerOneHandRank = evaluatePlayerHand(player1, builder);
+        // Player 2
+        playerTwoHandRank = evaluatePlayerHand(player2, builder);
+
+        if (playerOneHandRank.ordinal() > playerTwoHandRank.ordinal()) {
+            builder.append(player1.getName());
+            builder.append(" wins!");
+            player1Wins++;
+        } else if (playerOneHandRank.ordinal() < playerTwoHandRank.ordinal()) {
+            builder.append(player2.getName());
+            builder.append(" wins!");
+            player2Wins++;
+        } else {
+            builder.append(" It's a tie!");
+            ties++;
+        }
+
+        builder.append(System.getProperty("line.separator"));
+
+        log.info(builder.toString());
     }
 }

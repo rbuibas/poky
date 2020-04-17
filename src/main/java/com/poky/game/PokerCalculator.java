@@ -32,23 +32,43 @@ import java.util.List;
  * If equal, check how high (usually just check the highest card)
  */
 public class PokerCalculator {
-    public void calculateHand(List<Card> cards) {
+    public HandRanking calculateHand(List<Card> cards) {
         HandCalculator handCalculator = new HandCalculator();
         // almost all the checks go easier if the cards are sorted
         cards.sort(Comparator.comparingInt(Card::getValueOrdinal));
-        handCalculator.checkFlush(cards);
+        // I know this is ugly, worst thing ever, but I want to see it work
+        if (handCalculator.checkRoyalFlush(cards)) return HandRanking.RoyalFlush;
+        if (handCalculator.checkStraightFlush(cards)) return HandRanking.StraightFlush;
+        if (handCalculator.checkFourOfKind(cards)) return HandRanking.FourKind;
+        if (handCalculator.checkFullHouse(cards)) return HandRanking.FullHouse;
+        if (handCalculator.checkFlush(cards)) return HandRanking.Flush;
+        if (handCalculator.checkStraight(cards)) return HandRanking.Straight;
+        if (handCalculator.checkThreeOfKind(cards)) return HandRanking.ThreeKind;
+        if (handCalculator.checkTwoPair(cards)) return HandRanking.TwoPair;
+        if (handCalculator.checkPair(cards)) return HandRanking.Pair;
+        return HandRanking.HighCard;
     }
 
     public enum HandRanking {
-        HighCard,
-        Pair,
-        TwoPair,
-        ThreeKind,
-        Straight,
-        Flush,
-        FullHouse,
-        FourKind,
-        StraightFlush,
-        RoyalFlush
+        HighCard("High card"),
+        Pair("Pair"),
+        TwoPair("Two paris"),
+        ThreeKind("Three of a kind"),
+        Straight("Straight"),
+        Flush("Flush"),
+        FullHouse("Full house"),
+        FourKind("Four of a kind"),
+        StraightFlush("Straight flush"),
+        RoyalFlush("Royal flush");
+
+        private final String rankingName;
+
+        HandRanking(String rankingName) {
+            this.rankingName = rankingName;
+        }
+
+        public String getRankingName() {
+            return this.rankingName;
+        }
     }
 }

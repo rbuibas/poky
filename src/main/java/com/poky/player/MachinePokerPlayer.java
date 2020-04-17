@@ -11,4 +11,9 @@ public class MachinePokerPlayer extends PokerPlayer {
     public String getName() {
         return playerName;
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }
