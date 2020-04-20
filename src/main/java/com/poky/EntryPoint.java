@@ -23,9 +23,6 @@ public class EntryPoint {
         pokerGame.addPlayer(new MachinePokerPlayer("Extreme Blob"));
         pokerGame.addPlayer(new MachinePokerPlayer("Sitting Frog"));
 
-        // get the deck and shuffle it
-        pokerDeck = pokerGame.getPokerDeck();
-
         player1 = pokerGame.getPlayer("Extreme Blob");
         player2 = pokerGame.getPlayer("Sitting Frog");
 

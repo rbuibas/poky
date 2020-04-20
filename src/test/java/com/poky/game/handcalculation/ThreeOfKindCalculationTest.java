@@ -36,6 +36,8 @@ public class ThreeOfKindCalculationTest {
     @Mock
     Card mockCardKingOfHeart;
     @Mock
+    Card mockCardKingOfDiamond;
+    @Mock
     Card mockCardAceOfHeart;
     @Mock
     Card mockCardAceOfClub;
@@ -63,6 +65,8 @@ public class ThreeOfKindCalculationTest {
         Mockito.lenient().when(mockCardKingOfSpade.getColor()).thenReturn(Color.Spade);
         Mockito.lenient().when(mockCardKingOfHeart.getValueOrdinal()).thenReturn(11);
         Mockito.lenient().when(mockCardKingOfHeart.getColor()).thenReturn(Color.Heart);
+        Mockito.lenient().when(mockCardKingOfDiamond.getValueOrdinal()).thenReturn(11);
+        Mockito.lenient().when(mockCardKingOfDiamond.getColor()).thenReturn(Color.Diamond);
         Mockito.lenient().when(mockCardAceOfClub.getValueOrdinal()).thenReturn(12);
         Mockito.lenient().when(mockCardAceOfClub.getColor()).thenReturn(Color.Club);
         Mockito.lenient().when(mockCardAceOfHeart.getValueOrdinal()).thenReturn(12);
@@ -209,6 +213,21 @@ public class ThreeOfKindCalculationTest {
                     mockCardKingOfHeart,
                     mockCardKingOfSpade
             ));
+            assertTrue(isThreeOfKind);
+        }
+
+        @Test
+        void checkWith7Cards_TwoSetsOfThreeOfAKind() {
+            boolean isThreeOfKind = handCalculator.checkThreeOfKind(Arrays.asList(
+                    mockCardThreeOfDiamond,
+                    mockCardKingOfDiamond,
+                    mockCardAceOfDiamond,
+                    mockCardAceOfSpade,
+                    mockCardAceOfHeart,
+                    mockCardKingOfHeart,
+                    mockCardKingOfSpade
+            ));
+            // Should see which trips is used
             assertTrue(isThreeOfKind);
         }
 

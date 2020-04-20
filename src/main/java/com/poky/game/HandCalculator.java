@@ -28,7 +28,10 @@ public class HandCalculator {
                 sortedCards.stream().collect(groupingBy(Card::getColor)); // so cool!
         return mapByColors.values()
                 .stream()
-                .anyMatch(colors -> colors.size() >= FIVE_CARDS);
+                .filter(sameColor -> sameColor.size() >= FIVE_CARDS)
+                .findAny().isPresent();
+//                .stream()
+//                .max(Comparator.comparingInt(Card::getValueOrdinal));
     }
 
     /**
@@ -44,7 +47,7 @@ public class HandCalculator {
                 sortedCards.stream().collect(groupingBy(Card::getValueOrdinal));
         return mapByValue.values()
                 .stream()
-                .anyMatch(values -> values.size() >= FOUR_CARDS);
+                .anyMatch(values -> values.size() == FOUR_CARDS);
     }
 
     /**
@@ -60,7 +63,7 @@ public class HandCalculator {
                 sortedCards.stream().collect(groupingBy(Card::getValueOrdinal));
         return mapByValue.values()
                 .stream()
-                .anyMatch(values -> values.size() >= THREE_CARDS);
+                .anyMatch(values -> values.size() == THREE_CARDS);
     }
 
     /**

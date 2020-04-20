@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PokerGame {
-    final Logger log;
+    static final Logger log = LogManager.getLogger(PokerGame.class);
 
     private final Map<String, Player> playersMap;
     private final List<Card> communityCards;
@@ -33,7 +33,6 @@ public class PokerGame {
     static PokerCalculator pokerCalculator = new PokerCalculator();
 
     public PokerGame() {
-        log = LogManager.getLogger(this.getClass());
         playersMap = new HashMap<>();
         communityCards = new ArrayList<>();
     }

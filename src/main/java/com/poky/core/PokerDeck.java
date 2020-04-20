@@ -21,20 +21,20 @@ public class PokerDeck implements Deck<Card> {
     /**
      * Maximum number of cards in deck.
      */
-    final int CARDS_IN_STARTING_DECK = 52;
+    public static final int CARDS_IN_STARTING_DECK = 52;
     /**
      * Upper limit: head's up game with "run it 6 times". Do the math.
      */
-    final int MAX_BURNT_CARDS = 18;
+    public static final int MAX_BURNT_CARDS = 18;
     /**
      * Upper limit: 10 player game with "run it 4 times". Do the math.
      */
-    final int MAX_DEALT_CARDS = 40;
+    public static final int MAX_DEALT_CARDS = 40;
     /**
      * The collection holding the live cards.
      * All the cards are live cards at the moment of deck initialization.
      */
-    private Deque<Card> liveCards;
+    private Deque<Card> liveCards; // cannot be final because of the shuffle
     private final List<Card> burntCards;
     /**
      * The collection holding all the dealt cards.
@@ -51,6 +51,9 @@ public class PokerDeck implements Deck<Card> {
     private boolean deckLocked;
 
     public PokerDeck() {
+        /*
+        TODO: check at what load factor the list will increase capacity
+         */
         liveCards = new ArrayDeque<>(CARDS_IN_STARTING_DECK);
         burntCards = new ArrayList<>(MAX_BURNT_CARDS);
         dealtCards = new ArrayList<>(MAX_DEALT_CARDS);

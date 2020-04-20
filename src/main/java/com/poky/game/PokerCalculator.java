@@ -40,6 +40,11 @@ public class PokerCalculator {
         if (handCalculator.checkRoyalFlush(cards)) return HandRanking.RoyalFlush;
         if (handCalculator.checkStraightFlush(cards)) return HandRanking.StraightFlush;
         if (handCalculator.checkFourOfKind(cards)) return HandRanking.FourKind;
+        /*
+        As it stands, the code will not work if there are two sets of
+        three-of-a-kind, which can be a Full House.
+        TODO: do it.
+         */
         if (handCalculator.checkFullHouse(cards)) return HandRanking.FullHouse;
         if (handCalculator.checkFlush(cards)) return HandRanking.Flush;
         if (handCalculator.checkStraight(cards)) return HandRanking.Straight;
